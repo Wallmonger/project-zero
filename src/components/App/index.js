@@ -1,12 +1,14 @@
 import '../../App.css';
-import Header from '../Header/index'
+import Header from '../Header'
+import Landing from '../Landing'
+import Footer from '../Footer';
 
 function App() {
   return (
     <div>
-        <h1 className="">
           <Header />
-        </h1>
+          <Landing />
+          <Footer />
     </div>
   );
 }
