@@ -155,7 +155,7 @@ main {
 
 .btn-welcome:hover {
   border: 2px solid var(--white-color);
-  color: var(--red-color);
+  color: var(--steel-blue-color);
   background-color: var(--white-color);
 }
 /* END WELCOME PAGE */
