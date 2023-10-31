@@ -1,14 +1,24 @@
 import '../../App.css';
-import Header from '../Header'
-import Landing from '../Landing'
+import Header from '../Header';
+import Landing from '../Landing';
 import Footer from '../Footer';
+import Welcome from '../Welcome';
+import Login from '../Login';
+import Signup from '../Signup';
+import ErrorPage from '../ErrorPage'
 
 function App() {
   return (
     <div>
-          <Header />
-          <Landing />
-          <Footer />
+        <Header />
+
+        <Welcome />
+        <Landing />
+        <Login />
+        <Signup />
+        <ErrorPage />
+        
+        <Footer />
     </div>
   );
 }
