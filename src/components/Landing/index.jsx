@@ -1,13 +1,12 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Landing = () => {
 
-  const wRef = useRef(null);
-  
+  const wRef = useRef(null);  
   const [btn, setBtn] = useState(false);
 
-  console.log(wRef);
 
   useEffect(() => {
     wRef.current.classList.add('startingImg');
@@ -32,10 +31,20 @@ const Landing = () => {
   const displayBtn = btn && (
     <>
        <div className="leftBox" onMouseOver={setLeftImg} onMouseOut={clearImg}>
-          <motion.button className="btn-welcome" whileHover={{ scale: 1.1}} whileTap={{ scale: 0.9}}>Register</motion.button>
+          <motion.button 
+            className="btn-welcome" 
+            whileHover={{ scale: 1.1}} 
+            whileTap={{ scale: 0.9}}>
+              <Link to="/signup">Sign up</Link>
+          </motion.button>
       </div>
       <div className="rightBox" onMouseOver={setRightImg} onMouseOut={clearImg}>
-        <motion.button className="btn-welcome" whileHover={{ scale: 1.1}} whileTap={{ scale: 0.9}}>Login</motion.button>
+        <motion.button 
+          className="btn-welcome" 
+          whileHover={{ scale: 1.1}} 
+          whileTap={{ scale: 0.9}}>
+            <Link to="/login">Login</Link>
+        </motion.button>
       </div>
     </>
   )
