@@ -16,38 +16,52 @@ const ErrorPage = () => {
 
 
   const centerH2 = {
+    fontSize: '2rem',
     textAlign: 'center',
     marginTop: '50px'
   }
   
+  const h2Anim = { filter: 'blur(2px)'};
+  const h2AnimEnd = { filter: 'blur(0px)'}
+
   const initialBatmanAnim = {
     scale: .1,
+    filter: 'blur(0px)'
   }
   
   const batmanAnim = {
-    rotate: 3600,
-    scale: 5,
-    
+    rotate: 720,
+    scale: 2,
+    filter: 'blur(2px)'
   }
   
   const batmanAnimEnd = {
-    
-    scale: 1
+    rotate: -360,
+    scale: 1,
   }
 
   return (
     <div className="quiz-bg">
         <div className="container">
-            <h2 style={centerH2}>Oops, Page Not Found</h2>
+
+            <motion.h2 
+              style={centerH2} 
+              transition={{duration: 1}} 
+              initial={h2Anim} 
+              animate={h2AnimEnd}>
+              Oops, Page Not Found
+            </motion.h2>
+
             <motion.img 
                 src={batman} 
                 className='block mx-auto my-10' 
                 alt="Error page" 
-                transition={{duration: 1}} 
+                transition={{duration: .3}} 
                 initial={initialBatmanAnim} 
                 animate={animationComplete ? batmanAnimEnd : batmanAnim} 
                 onAnimationComplete={handleAnimationComplete}
             />
+            
         </div>
     </div>
   )
