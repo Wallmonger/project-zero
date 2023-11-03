@@ -5,7 +5,6 @@ import batman from '../../img/batman.png';
 
 
 const ErrorPage = () => {
-  
   const [animationComplete, setAnimationComplete] = useState(false);
 
 
