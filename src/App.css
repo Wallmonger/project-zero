@@ -255,9 +255,9 @@ footer {
 
 .formBoxRight span {
   display: block;
-  color: var(--red-color);
+  color: var(--steel-blue-color);
   text-align: center;
-  border: 1px solid var(--red-color);
+  border: 1px solid var(--steel-blue-color);
   padding: 10px;
   margin: 15px 0;
 }
@@ -284,7 +284,7 @@ footer {
   width: 100%;
   padding: 10px 0;
   font-size: 17px;
-  color: var(--red-color);
+  color: var(--steel-blue-color);
   text-transform: uppercase;
   font-weight: bold;
   margin-bottom: 30px;
@@ -323,7 +323,7 @@ footer {
   display: block;
   margin: 0 auto 20px;
   min-width: 150px;
-  background-color: transparent;
+  background-color: var(--steel-blue-color);
   color: var(--white-color);
   padding: 7px;
   font-size: 15px;
@@ -331,7 +331,7 @@ footer {
 }
 
 .formContent button:hover {
-  background-color: var(--red-color);
+  background-color: var(--blue-color);
   color: var(--white-color);
   cursor: pointer;
 }

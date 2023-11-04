@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 
-const config = {
+const firebaseConfig = {
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
     projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
@@ -11,12 +11,12 @@ const config = {
 };
 
 
-const app = initializeApp(config);
+const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app); 
 
 
-const signupUser = (email, password) => auth.createUserWithEmailAndPassword(email, password);
+// const signupUser = (email, password) => auth.createUserWithEmailAndPassword(email, password);
 
-const loginUser = (email, password) => auth.signInWithEmailAndPassword(email, password);
+// const loginUser = (email, password) => auth.signInWithEmailAndPassword(email, password);
 
-const signoutUser = () => auth.signOut();
+// const signoutUser = () => auth.signOut();
