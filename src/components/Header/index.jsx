@@ -5,7 +5,7 @@ const Header = () => {
     <header>
         <div className="banner-container">
             <h1 className="transition-all duration-1000 hover:tracking-tight">
-              <a href="/">Project Quiz</a>
+              <a href="/" className="text-3xl md:text-5xl lg:text-5xl">Project Quiz</a>
             </h1>
         </div>
     </header>
