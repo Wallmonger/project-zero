@@ -23,8 +23,9 @@ const Login = () => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
             .then(user => {
-                console.log(user);
                 // block the user from back navigation (replace latest history)
+                setEmail('');
+                setPassword('');
                 navigate('/welcome', { replace: true});
             })
             .catch(err => {
@@ -84,6 +85,8 @@ const Login = () => {
 
                         <div className='linkContainer'>
                             <Link className='simpleLink' to="/signup">You don't have an account? Sign up here</Link>
+                            <br/>
+                            <Link className='simpleLink' to="/forgetpassword">Forgot your password? Click here</Link>
                         </div>
                     </div>
                 </div>

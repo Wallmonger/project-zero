@@ -5,6 +5,7 @@ import { auth } from '../Firebase/firebaseConfig';
 
 import Logout from '../Logout';
 import Quiz from '../Quiz';
+import { waitFor } from '@testing-library/react';
 
 const Welcome = () => {
 
@@ -13,8 +14,8 @@ const Welcome = () => {
 
     useEffect(() => {
         const listener = onAuthStateChanged(auth, (user) => {
-            user ? setUserSession(user) 
-            : navigate('/') 
+            user ? setUserSession(user) : setTimeout(() => { navigate('/')}, 2000);
+            
         })
 
         // ComponentWillUnmount
