@@ -15,6 +15,7 @@ class Quiz extends Component
             storedQuestions: [],
             question: null,
             options: [],
+            idQuestion: 0
         }
     }
 
@@ -37,23 +38,34 @@ class Quiz extends Component
         this.loadQuestions(this.state.levelNames[this.state.quizLevel]);
     }
 
-    
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.storedQuestions !== prevState.storedQuestions) {
+            this.setState({
+                question: this.state.storedQuestions[this.state.idQuestion].question,
+                options: this.state.storedQuestions[this.state.idQuestion].options
+            })
+
+            
+        }
+    }
 
     render() {
+        
         const { pseudo } = this.props.userData;
+
+        const displayOptions = this.state.options.map((option, index) => {
+            return (<p className='answerOptions mb-2' key={index}>{option}</p>)
+        })
 
         return (
             <div>
                 {/* <h2>{pseudo}</h2> */}
                 <Levels />
                 <ProgressBar />
-
-                <h2>Quiz</h2>
-                <p className="answerOptions">Question 1</p>
-                <p className="answerOptions">Question 2</p>
-                <p className="answerOptions">Question 3</p>
-                <p className="answerOptions">Question 4</p> <br />
-                <button className="btnSubmit">Next</button>
+                <h2>{this.state.question}</h2>
+                {displayOptions}
+                
+                <button className="btnSubmit" onClick={() => {this.setState({idQuestion: this.state.idQuestion + 1})}}>Next</button>
             </div>
         )
     }
