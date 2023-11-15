@@ -2,6 +2,8 @@ import { Component, createRef } from 'react';
 import Levels from '../Levels';
 import ProgressBar from '../ProgressBar';
 import { Questions } from '../Questions';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 class Quiz extends Component  
 {
@@ -18,7 +20,8 @@ class Quiz extends Component
             idQuestion: 0,
             btnDisabled: true,
             userAnswer: null,
-            score: 0
+            score: 0,
+            showWelcomeMsg: true
         }
     }
 
@@ -41,6 +44,52 @@ class Quiz extends Component
         }
     }
 
+    showWelcomeMsg = (pseudo) => {
+        if (this.state.showWelcomeMsg) {
+
+            this.setState({
+                showWelcomeMsg: false
+            })
+
+            toast.info(`Welcome ${pseudo} !`, {
+                position: 'top-right',
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: false,
+                theme: 'colored',
+                icon: false
+            })
+        }
+    }
+
+    goodAnswer = () => {
+        toast.success(`Nice +1 !`, {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            theme: 'colored',
+            icon: false
+        })
+    }
+
+    badAnswer = () => {
+        toast.error(`Nope +0 !`, {
+            position: 'top-right',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            theme: 'colored',
+            icon: false,
+        })
+    }
+
     componentDidMount() {
         this.loadQuestions(this.state.levelNames[this.state.quizLevel]);
     }
@@ -60,6 +109,10 @@ class Quiz extends Component
                 userAnswer: null,
                 btnDisabled: true
             })
+        }
+
+        if (this.props.userData.pseudo) {
+            this.showWelcomeMsg(this.props.userData.pseudo);
         }
     }
 
@@ -81,10 +134,15 @@ class Quiz extends Component
         }
 
         const goodAnswer = this.storedDataRef.current[this.state.idQuestion].answer;
+
         if (goodAnswer === this.state.userAnswer) {
             this.setState((prevState) => ({
                 score: prevState.score + 1
             }))
+
+            this.goodAnswer();
+        } else {
+            this.badAnswer();
         }
     }
     
@@ -107,6 +165,7 @@ class Quiz extends Component
 
         return (
             <div>
+                <ToastContainer/>
                 {/* <h2>{pseudo}</h2> */}
                 <Levels />
                 <ProgressBar idQuestion={this.state.idQuestion + 1}/>
