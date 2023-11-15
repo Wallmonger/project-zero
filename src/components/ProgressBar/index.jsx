@@ -1,14 +1,14 @@
 
 
-const ProgressBar = () => {
+const ProgressBar = ({idQuestion}) => {
   return (
         <>
             <div className="percentage">
-                <div className="progressPercent">Question: 1/10</div>
-                <div className="progressPercent">Progress: 10%</div>
+                <div className="progressPercent">Question: {idQuestion}/10</div>
+                <div className="progressPercent">Progress: {idQuestion * 10}%</div>
             </div>
             <div className="progressBar">
-                <div className="progressBarChange" style={{width: '10%'}}></div>
+                <div className="progressBarChange transition-all" style={{width: `${idQuestion * 10}%`}}></div>
             </div>
         </>
   )
