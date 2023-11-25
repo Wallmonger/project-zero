@@ -180,7 +180,10 @@ class Quiz extends Component
             <>
                 <ToastContainer/>
                 <Levels />
-                <ProgressBar idQuestion={this.state.idQuestion + 1}/>
+                <ProgressBar 
+                    idQuestion={this.state.idQuestion + 1} 
+                    maxQuestions={this.state.maxQuestions}
+                />
                 <h2>{this.state.question}</h2>
 
                 {displayOptions}
@@ -190,7 +193,7 @@ class Quiz extends Component
                     disabled={this.state.btnDisabled} 
                     onClick={this.nextQuestion}
                 >
-                Next
+                { this.state.idQuestion < this.state.maxQuestions - 1 ? "Next" : "Finish"}
                 </button>
             </>
         )

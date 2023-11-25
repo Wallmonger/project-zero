@@ -1,17 +1,25 @@
+import { memo } from 'react';
 
+const ProgressBar = ({idQuestion, maxQuestions}) => {
 
-const ProgressBar = ({idQuestion}) => {
-  return (
-        <>
-            <div className="percentage">
-                <div className="progressPercent">Question: {idQuestion}/10</div>
-                <div className="progressPercent">Progress: {idQuestion * 10}%</div>
-            </div>
-            <div className="progressBar">
-                <div className="progressBarChange transition-all" style={{width: `${idQuestion * 10}%`}}></div>
-            </div>
-        </>
-  )
+    const getWidth = (nQuestions, idQuestion) => {
+        return (100 / nQuestions) * idQuestion;
+    }
+
+    const progressPercent = getWidth(maxQuestions, idQuestion);
+
+    console.log(progressPercent);
+    return (
+            <>
+                <div className="percentage">
+                    <div className="progressPercent">Question: {idQuestion}/{maxQuestions}</div>
+                    <div className="progressPercent">Progress: {progressPercent}%</div>
+                </div>
+                <div className="progressBar">
+                    <div className="progressBarChange transition-all" style={{width: `${progressPercent}%`}}></div>
+                </div>
+            </>
+    )
 }
 
-export default ProgressBar
+export default memo(ProgressBar)
