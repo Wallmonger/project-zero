@@ -4,6 +4,7 @@ import ProgressBar from '../ProgressBar';
 import { Questions } from '../Questions';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import QuizOver from'../QuizOver';
 
 class Quiz extends Component  
 {
@@ -21,7 +22,8 @@ class Quiz extends Component
             btnDisabled: true,
             userAnswer: null,
             score: 0,
-            showWelcomeMsg: true
+            showWelcomeMsg: true,
+            quizEnd: false
         }
     }
 
@@ -95,6 +97,7 @@ class Quiz extends Component
     }
 
     componentDidUpdate(prevProps, prevState) {
+
         if (this.state.storedQuestions !== prevState.storedQuestions) {
             this.setState({
                 question: this.state.storedQuestions[this.state.idQuestion].question,
@@ -123,10 +126,17 @@ class Quiz extends Component
         })
     }
 
+    gameOver = () => {
+        this.setState({
+            quizEnd: true
+        })
+    }
+
     nextQuestion = () => {
 
-        if (this.state.idQuestion < this.maxQuestion - 1) {
-            // End current level
+        // End current level if maxQuestions is reached
+        if (this.state.idQuestion === this.state.maxQuestions - 1) {
+            this.gameOver();
         } else {
             this.setState((prevState) => ({
                 idQuestion: prevState.idQuestion + 1
@@ -163,10 +173,12 @@ class Quiz extends Component
             )
         })
 
-        return (
-            <div>
+        return this.state.quizEnd ? (
+            <QuizOver />
+        ) : 
+        (
+            <>
                 <ToastContainer/>
-                {/* <h2>{pseudo}</h2> */}
                 <Levels />
                 <ProgressBar idQuestion={this.state.idQuestion + 1}/>
                 <h2>{this.state.question}</h2>
@@ -180,7 +192,7 @@ class Quiz extends Component
                 >
                 Next
                 </button>
-            </div>
+            </>
         )
     }
 }
