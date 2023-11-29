@@ -631,9 +631,9 @@ input:checked+.slider:before {
 }
 
 .btnInfo {
-  background-color: var(--dark-red-color);
-  border: 2px solid var(--dark-red-color);
-  color: var(--white-color);
+  background-color: var(--white-color);
+  border: 2px solid var(--steel-blue-color);
+  color: var(--steel-blue-color);
   text-transform: uppercase;
   border-radius: 4px;
   cursor: pointer;
