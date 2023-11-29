@@ -4,47 +4,105 @@ import { motion } from 'framer-motion';
 
 const QuizOver = forwardRef((props, ref) => {
 
+    const {levelNames, score, maxQuestions, quizLevel, percent} = props;
+    //TODO: Fix percentage (-10)
+
+    const averageGrade = maxQuestions / 2;
+
     const [asked, setAsked] = useState([]);
-    console.log(asked);
 
     useEffect(() => {   
         setAsked(ref.current);
     }, [ref])
 
-    const questionAnswer = asked.map(({id, question, answer}) => {
-        return (
-            <tr key={id}>
-                <td>{question}</td>
-                <td>{answer}</td>
-                <td>
-                    <motion.button 
-                        className="btnInfo" 
-                        whileHover={{ scale: 1.05}} 
-                        whileTap={{ scale: 0.9}}>
-                        Infos
-                    </motion.button>
-                </td>
-            </tr>
+    const decision = score >= averageGrade ? (
+        <>
+            <div className="stepsBtnContainer">
+            {
+                quizLevel < levelNames.length ? (
+                    <>
+                        <p className="successMsg">Congratulation, try next level !</p>
+                        <motion.button 
+                            className="btnResult success" 
+                            whileHover={{ scale: 1.05}} 
+                            whileTap={{ scale: 0.9}}>
+                            Next level
+                        </motion.button>
+                    </>    
+                )
+                :
+                (
+                    <>
+                        <div className="stepsBtnContainer">
+                            <p className="successMsg">Well done ! You are an expert !</p>
+                            <motion.button 
+                                className="btnResult success" 
+                                whileHover={{ scale: 1.05}} 
+                                whileTap={{ scale: 0.9}}>
+                                Next level
+                            </motion.button>
+                        </div>
+                        
+                    </>
+                )
+                
+            }
+            </div>   
+            <div className="percentage">
+                <div className="progressPercent">Total: {percent}%</div>
+                <div className="progressPercent">Note: {score}/{maxQuestions}</div>
+            </div>
+        </>
         )
-        
-    })
+        :
+        (
+        <>
+            <div className="stepBtnContainer">
+                <p className="failureMsg">You failed !</p>
+            </div>
+            <div className="percentage">
+                <div className="progressPercent">Total: {percent}%</div>
+                <div className="progressPercent">Note: {score}/{maxQuestions}</div>
+            </div>
+        </>
+        )
+    
+
+        const questionAnswer = score >= averageGrade ? (
+            asked.map(({id, question, answer}) => {
+                return (
+                    <tr key={id}>
+                        <td>{question}</td>
+                        <td>{answer}</td>
+                        <td>
+                            <motion.button 
+                                className="btnInfo" 
+                                whileHover={{ scale: 1.05}} 
+                                whileTap={{ scale: 0.9}}>
+                                Infos
+                            </motion.button>
+                        </td>
+                    </tr>
+                )
+                
+            })
+            )
+            :
+            (
+                <tr>
+                    <td colSpan='3'>
+                        <p className="text-center text-sky-600 font-semibold">
+                            Try again !
+                        </p>
+                    </td>
+                </tr>
+            )       
+    
 
     return (
         <>
-            <div className="stepsBtnContainer">
-                <p className="successMsg">Congratulation!</p>
-                <motion.button 
-                    className="btnResult success" 
-                    whileHover={{ scale: 1.05}} 
-                    whileTap={{ scale: 0.9}}>
-                    Next level
-                </motion.button>
-            </div>
-            <div className="percentage">
-                <div className="progressPercent">Total: 10%</div>
-                <div className="progressPercent">Note: 10/10</div>
-            </div>
 
+            {decision}
             <hr />
             <p>Answers : </p>
 
