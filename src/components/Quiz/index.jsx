@@ -119,6 +119,12 @@ class Quiz extends Component
             })
         }
 
+        // Fix % quizOver
+        if (this.state.quizEnd !== prevState.quizEnd) {
+            const gradePercent = this.getPercentage(this.state.maxQuestions, this.state.score);
+            this.gameOver(gradePercent);
+        }  
+
         if (this.props.userData.pseudo !== prevProps.userData.pseudo) {
             this.showToastMsg(this.props.userData.pseudo);
         }
@@ -133,28 +139,26 @@ class Quiz extends Component
 
     getPercentage = (maxQuest, score) => (score / maxQuest) * 100;
 
-    gameOver = () => {
+    gameOver = (percentage) => {
 
         const gradePercent = this.getPercentage(this.state.maxQuestions, this.state.score);
 
         if (gradePercent >= 50) 
             this.setState({
                 quizLevel: this.state.quizLevel + 1,
-                percent: gradePercent,
-                quizEnd: true
+                percent: percentage,
             })
         else 
             this.setState({
-                percent: gradePercent,
-                quizEnd: true
+                percent: percentage,
             })
     }
 
     nextQuestion = () => {
-
-        // End current level if maxQuestions is reached
         if (this.state.idQuestion === this.state.maxQuestions - 1) {
-            this.gameOver();
+            this.setState({
+                quizEnd: true
+            })
         } else {
             this.setState((prevState) => ({
                 idQuestion: prevState.idQuestion + 1
@@ -222,8 +226,8 @@ class Quiz extends Component
                 
                 <button 
                     className="btnSubmit" 
-                    disabled={this.state.btnDisabled} 
                     onClick={this.nextQuestion}
+                    disabled={this.state.btnDisabled} 
                 >
                 { this.state.idQuestion < this.state.maxQuestions - 1 ? "Next" : "Finish"}
                 </button>

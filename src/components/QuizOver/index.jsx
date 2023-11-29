@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 const QuizOver = forwardRef((props, ref) => {
 
     const {levelNames, score, maxQuestions, quizLevel, percent, loadLevelQuestions} = props;
-    //TODO: Fix percentage (-10)
 
     const averageGrade = maxQuestions / 2;
 
