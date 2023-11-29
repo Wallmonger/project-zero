@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const QuizOver = forwardRef((props, ref) => {
 
-    const {levelNames, score, maxQuestions, quizLevel, percent} = props;
+    const {levelNames, score, maxQuestions, quizLevel, percent, loadLevelQuestions} = props;
     //TODO: Fix percentage (-10)
 
     const averageGrade = maxQuestions / 2;
@@ -15,57 +15,60 @@ const QuizOver = forwardRef((props, ref) => {
         setAsked(ref.current);
     }, [ref])
 
+    if (score < averageGrade) {
+        setTimeout(() => loadLevelQuestions(quizLevel), 3000)
+    }
+
     const decision = score >= averageGrade ? (
-        <>
-            <div className="stepsBtnContainer">
-            {
-                quizLevel < levelNames.length ? (
-                    <>
-                        <p className="successMsg">Congratulation, try next level !</p>
+    <>
+        <div className="stepsBtnContainer">
+        {
+            quizLevel < levelNames.length ? (
+                <>
+                    <p className="successMsg">Congratulation, try next level !</p>
+                    <motion.button 
+                        className="btnResult success"
+                        onClick={() => loadLevelQuestions(quizLevel)} 
+                        whileHover={{ scale: 1.05}} 
+                        whileTap={{ scale: 0.9}}>
+                        Next level
+                    </motion.button>
+                </>    
+            )
+            :
+            (
+                <>
+                        <p className="successMsg">Well done ! You are an expert !</p>
                         <motion.button 
-                            className="btnResult success" 
+                            className="btnResult success"
+                            onClick={() => loadLevelQuestions(0)}
                             whileHover={{ scale: 1.05}} 
                             whileTap={{ scale: 0.9}}>
-                            Next level
-                        </motion.button>
-                    </>    
-                )
-                :
-                (
-                    <>
-                        <div className="stepsBtnContainer">
-                            <p className="successMsg">Well done ! You are an expert !</p>
-                            <motion.button 
-                                className="btnResult success" 
-                                whileHover={{ scale: 1.05}} 
-                                whileTap={{ scale: 0.9}}>
-                                Next level
-                            </motion.button>
-                        </div>
-                        
-                    </>
-                )
-                
-            }
-            </div>   
-            <div className="percentage">
-                <div className="progressPercent">Total: {percent}%</div>
-                <div className="progressPercent">Note: {score}/{maxQuestions}</div>
-            </div>
-        </>
-        )
-        :
-        (
-        <>
-            <div className="stepBtnContainer">
-                <p className="failureMsg">You failed !</p>
-            </div>
-            <div className="percentage">
-                <div className="progressPercent">Total: {percent}%</div>
-                <div className="progressPercent">Note: {score}/{maxQuestions}</div>
-            </div>
-        </>
-        )
+                            Home Page
+                        </motion.button>                        
+                </>
+            )
+            
+        }
+        </div>   
+        <div className="percentage">
+            <div className="progressPercent">Total: {percent}%</div>
+            <div className="progressPercent">Note: {score}/{maxQuestions}</div>
+        </div>
+    </>
+    )
+    :
+    (
+    <>
+        <div className="stepBtnContainer">
+            <p className="failureMsg">You failed !</p>
+        </div>
+        <div className="percentage">
+            <div className="progressPercent">Total: {percent}%</div>
+            <div className="progressPercent">Note: {score}/{maxQuestions}</div>
+        </div>
+    </>
+    )
     
 
         const questionAnswer = score >= averageGrade ? (
@@ -91,6 +94,7 @@ const QuizOver = forwardRef((props, ref) => {
             (
                 <tr>
                     <td colSpan='3'>
+                        <div className="loader"></div>
                         <p className="text-center text-sky-600 font-semibold">
                             Try again !
                         </p>
