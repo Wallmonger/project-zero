@@ -1,5 +1,6 @@
 import { useEffect, forwardRef, memo, useState } from "react";
 import { motion } from 'framer-motion';
+import { GiTrophyCup } from "react-icons/gi";
 
 
 const QuizOver = forwardRef((props, ref) => {
@@ -37,7 +38,9 @@ const QuizOver = forwardRef((props, ref) => {
             :
             (
                 <>
-                        <p className="successMsg">Well done ! You are an expert !</p>
+                        <p className="successMsg">
+                            <GiTrophyCup size='50px' className="inline"/> Well done ! You are an expert !
+                        </p>
                         <motion.button 
                             className="btnResult success"
                             onClick={() => loadLevelQuestions(0)}

@@ -5,6 +5,7 @@ import { Questions } from '../Questions';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import QuizOver from'../QuizOver';
+import { FaChevronRight } from 'react-icons/fa6' 
 
 class Quiz extends Component  
 {
@@ -192,11 +193,11 @@ class Quiz extends Component
         const displayOptions = this.state.options.map((option, index) => {
             return (
                 <p 
-                    className={`answerOptions mb-2 ${this.state.userAnswer === option && "selected"}`}
+                    className={`answerOptions mb-2 ${this.state.userAnswer === option && "selected"} flex items-center`}
                     key={index}
                     onClick={() => this.submitAnswer(option)}
                 >
-                        {option}
+                    <FaChevronRight className='me-2'/> {option}
                 </p>
             )
         })
