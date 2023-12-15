@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../Firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { Tooltip } from 'react-tooltip';
 
 
 const Logout = () => {
@@ -36,8 +37,17 @@ const Logout = () => {
                     type="checkbox"
                     checked={checked}
                 />
-                <span className="slider round"></span>
+                <span 
+                    className="slider round" 
+                    data-tooltip-id="logoutSlider"
+                    data-tooltip-content="Logout"
+                    data-tooltip-place="left"
+                ></span>
             </label>
+            <Tooltip
+                id="logoutSlider"  
+                style={{backgroundColor: '#4682B4', fontWeight:"600"}}  
+            />
         </div>
     )
 }
