@@ -5,6 +5,7 @@ import { auth, user } from '../Firebase/firebaseConfig';
 import { getDoc } from 'firebase/firestore';
 
 import Logout from '../Logout';
+import Loader from '../Loader'
 import Quiz from '../Quiz';
 
 
@@ -39,10 +40,11 @@ const Welcome = () => {
     }, [userSession]);
 
     return userSession === null ? (
-        <>
-            <div className='loader'></div>
-            <p className='loaderText'>Please wait ..</p>
-        </>
+            <Loader 
+                loadingMsg={'Please wait ..'}
+                styling={'text-white-500'}
+            />
+
     ) : (
         <div className='quiz-bg'>
             <div className='container'>

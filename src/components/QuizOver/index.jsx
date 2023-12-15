@@ -1,6 +1,7 @@
 import { useEffect, forwardRef, memo, useState } from "react";
 import { motion } from 'framer-motion';
 import { GiTrophyCup } from "react-icons/gi";
+import Loader from '../Loader';
 
 
 const QuizOver = forwardRef((props, ref) => {
@@ -96,10 +97,10 @@ const QuizOver = forwardRef((props, ref) => {
             (
                 <tr>
                     <td colSpan='3'>
-                        <div className="loader"></div>
-                        <p className="text-center text-sky-600 font-semibold">
-                            Try again !
-                        </p>
+                        <Loader 
+                            loadingMsg={"Try again"}
+                            styling={'text-center text-red-600 font-semibold'}
+                        />
                     </td>
                 </tr>
             )       
