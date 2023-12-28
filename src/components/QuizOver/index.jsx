@@ -9,6 +9,9 @@ const QuizOver = forwardRef((props, ref) => {
 
     const {levelNames, score, maxQuestions, quizLevel, percent, loadLevelQuestions} = props;
 
+    const API_PUBLIC_KEY = process.env.REACT_APP_MARVEL_PUBLIC_API_KEY;
+    const hash = process.env.REACT_APP_MARVEL_MD5_HASH;
+
     const averageGrade = maxQuestions / 2;
 
     const [asked, setAsked] = useState([]);
