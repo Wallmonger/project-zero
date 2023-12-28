@@ -2,6 +2,7 @@ import { useEffect, forwardRef, memo, useState } from "react";
 import { motion } from 'framer-motion';
 import { GiTrophyCup } from "react-icons/gi";
 import Loader from '../Loader';
+import Modal from '../Modal';
 
 
 const QuizOver = forwardRef((props, ref) => {
@@ -11,10 +12,19 @@ const QuizOver = forwardRef((props, ref) => {
     const averageGrade = maxQuestions / 2;
 
     const [asked, setAsked] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
 
     useEffect(() => {   
         setAsked(ref.current);
     }, [ref])
+
+    const showModal = (id) => {
+        setOpenModal(true);
+    }
+
+    const closeModal = () => {
+        setOpenModal(false);
+    }
 
     if (score < averageGrade) {
         setTimeout(() => loadLevelQuestions(quizLevel), 3000)
@@ -75,13 +85,14 @@ const QuizOver = forwardRef((props, ref) => {
     
 
         const questionAnswer = score >= averageGrade ? (
-            asked.map(({id, question, answer}) => {
+            asked.map(({id, question, answer, heroId}) => {
                 return (
                     <tr key={id}>
                         <td>{question}</td>
                         <td>{answer}</td>
                         <td>
-                            <motion.button 
+                            <motion.button
+                                onClick={() => showModal(heroId)} 
                                 className="btnInfo" 
                                 whileHover={{ scale: 1.05}} 
                                 whileTap={{ scale: 0.9}}>
@@ -113,7 +124,7 @@ const QuizOver = forwardRef((props, ref) => {
             <hr />
             <p>Answers : </p>
 
-            <div className="andwerContainer">
+            <div className="answerContainer">
                 <table className="answers">
                     <thead>
                         <tr>
@@ -127,6 +138,23 @@ const QuizOver = forwardRef((props, ref) => {
                     </tbody>
                 </table>
             </div>
+
+            <Modal showModal={openModal} closeModal={closeModal}>
+                <div className="modalHeader">
+                    <h2>Title</h2>
+                </div>
+                <div className="modalBody">
+                    <h3>Title 2</h3>
+                </div>
+                <div className="modalFooter">
+                    <motion.button
+                        className="modalBtn" 
+                        whileHover={{ scale: 1.05}} 
+                        whileTap={{ scale: 0.9}}>
+                        Close
+                    </motion.button>
+                </div>
+            </Modal>
         </>
 
     )
