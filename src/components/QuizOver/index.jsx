@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { GiTrophyCup } from "react-icons/gi";
 import Loader from '../Loader';
 import Modal from '../Modal';
+import axios from 'axios';
 
 
 const QuizOver = forwardRef((props, ref) => {
@@ -16,6 +17,8 @@ const QuizOver = forwardRef((props, ref) => {
 
     const [asked, setAsked] = useState([]);
     const [openModal, setOpenModal] = useState(false);
+    const [characterData, setCharacterData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {   
         setAsked(ref.current);
@@ -23,10 +26,20 @@ const QuizOver = forwardRef((props, ref) => {
 
     const showModal = (id) => {
         setOpenModal(true);
+        
+        axios
+        .get(`https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=${API_PUBLIC_KEY}&hash=${hash}`)
+        .then(response => {
+            setCharacterData(response.data.data.results);
+            console.log(characterData)
+            setIsLoading(false);
+        })
+        .catch(err => console.log(err));
     }
 
     const closeModal = () => {
         setOpenModal(false);
+        setIsLoading(true);
     }
 
     if (score < averageGrade) {
@@ -118,7 +131,37 @@ const QuizOver = forwardRef((props, ref) => {
                     </td>
                 </tr>
             )       
-    
+
+    const resultInModal = !isLoading ? (
+        <>
+            <div className="modalHeader">
+                <h2 className="text-xl">{characterData[0].name}</h2>
+                <img width="10%" className="float-left rounded-md" src={`${characterData[0].thumbnail.path}.${characterData[0].thumbnail.extension}`} alt={characterData[0].name}/> 
+            </div>
+            <div className="modalBody">
+                <h3>{characterData[0].description}</h3>
+            </div>
+            <div className="modalFooter">
+                <motion.button
+                    className="modalBtn" 
+                    whileHover={{ scale: 1.05}} 
+                    whileTap={{ scale: 0.9}}>
+                    Close
+                </motion.button>
+            </div>
+        </>
+    )
+    :
+    (
+        <>
+            <div className="modalHeader">
+                <h2 className="text-xl">Waiting ...</h2>
+            </div>
+            <div className="modalBody">
+                <Loader />
+            </div>
+        </>
+    )
 
     return (
         <>
@@ -143,20 +186,7 @@ const QuizOver = forwardRef((props, ref) => {
             </div>
 
             <Modal showModal={openModal} closeModal={closeModal}>
-                <div className="modalHeader">
-                    <h2>Title</h2>
-                </div>
-                <div className="modalBody">
-                    <h3>Title 2</h3>
-                </div>
-                <div className="modalFooter">
-                    <motion.button
-                        className="modalBtn" 
-                        whileHover={{ scale: 1.05}} 
-                        whileTap={{ scale: 0.9}}>
-                        Close
-                    </motion.button>
-                </div>
+                { resultInModal }
             </Modal>
         </>
 
