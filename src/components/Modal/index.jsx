@@ -1,8 +1,8 @@
 
-const Modal = ({ showModal, closeModal, children }) => {
+const Modal = ({ showModal, children }) => {
   return (
     showModal && (
-        <div className="modalBackground" onClick={closeModal}>
+        <div className="modalBackground">
             <div className="modalContainer">
                 { children }
             </div>

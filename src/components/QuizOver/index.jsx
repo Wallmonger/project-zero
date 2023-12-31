@@ -55,7 +55,7 @@ const QuizOver = forwardRef((props, ref) => {
             .get(`https://gateway.marvel.com/v1/public/characters/${id}?ts=1&apikey=${API_PUBLIC_KEY}&hash=${hash}`)
             .then(response => {
                 setCharacterData(response.data.data.results);
-                console.log(characterData)
+                console.log(response.data)
                 setIsLoading(false);
     
                 localStorage.setItem(id, JSON.stringify(response.data.data.results));
@@ -72,6 +72,10 @@ const QuizOver = forwardRef((props, ref) => {
     const closeModal = () => {
         setOpenModal(false);
         setIsLoading(true);
+    }
+
+    const capitalizeFirstLetter = str => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
     if (score < averageGrade) {
@@ -168,13 +172,35 @@ const QuizOver = forwardRef((props, ref) => {
         <>
             <div className="modalHeader">
                 <h2 className="text-xl">{characterData[0].name}</h2>
-                <img width="10%" className="float-left rounded-md" src={`${characterData[0].thumbnail.path}.${characterData[0].thumbnail.extension}`} alt={characterData[0].name}/> 
+                
             </div>
             <div className="modalBody">
-                <h3>{characterData[0].description}</h3>
+                <div className="comicImage">
+                    <img src={`${characterData[0].thumbnail.path}.${characterData[0].thumbnail.extension}`} alt={characterData[0].name}/> 
+                    <p>Data provided by Marvel. &copy; 2023 MARVEL</p>
+                </div>
+
+                <div className="comicDetails">
+                    <h3 className="text-xl">Description</h3>
+                    {
+                        characterData[0].description ? <p>{characterData[0].description}</p> : <p>Description unavailable at this time</p>
+                    }
+
+                    <h3 className="text-xl">More info</h3>
+                    {
+                        characterData[0].urls &&
+                        characterData[0].urls.map(({type, url}, index) => {
+                            return  <a key={index} href={url} target="_blank" rel="noopenner noreferrer">
+                                        {capitalizeFirstLetter(type)} 
+                                    </a>
+                        })
+                    }
+                </div>
             </div>
+
             <div className="modalFooter">
                 <motion.button
+                    onClick={closeModal}
                     className="modalBtn" 
                     whileHover={{ scale: 1.05}} 
                     whileTap={{ scale: 0.9}}>
